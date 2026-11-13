@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getStoredFile } from '@/lib/sessionStore';
 
-export async function GET(
-  req: Request,
-  props: { params: Promise<{ id: string; fileId: string }> }
-) {
-  const { id, fileId } = await props.params;
+export const dynamic = 'force-dynamic';
+
+export async function GET(req: Request, context: any) {
+  const params = await context.params;
+  const { id, fileId } = params;
   const stored = getStoredFile(id, fileId);
 
   if (!stored) {
@@ -14,10 +14,12 @@ export async function GET(
 
   const { meta, data } = stored;
 
-  const headers = new Headers();
-  headers.set('Content-Type', meta.type);
-  headers.set('Content-Length', data.byteLength.toString());
-  headers.set('Content-Disposition', `attachment; filename="${encodeURIComponent(meta.name)}"`);
-
-  return new NextResponse(data, { headers });
+  return new Response(data, {
+    status: 200,
+    headers: {
+      'Content-Type': meta.type,
+      'Content-Length': data.byteLength.toString(),
+      'Content-Disposition': `attachment; filename="${encodeURIComponent(meta.name)}"`,
+    },
+  });
 }

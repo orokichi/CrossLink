@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server';
 import { getSession, pushMessage } from '@/lib/sessionStore';
 
-export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
-  const { id } = await props.params;
+export const dynamic = 'force-dynamic';
+
+export async function GET(req: Request, context: any) {
+  const params = await context.params;
+  const id = params.id;
   const session = getSession(id);
   if (!session) {
     return NextResponse.json({ ok: false, error: 'Session not found' }, { status: 404 });
   }
 
-  // Check if device is connected based on heartbeat within last 15 seconds
   const isAlive = Date.now() - session.deviceStatus.lastSeen < 15000;
   const deviceStatus = {
     ...session.deviceStatus,
@@ -23,8 +25,9 @@ export async function GET(req: Request, props: { params: Promise<{ id: string }>
   });
 }
 
-export async function POST(req: Request, props: { params: Promise<{ id: string }> }) {
-  const { id } = await props.params;
+export async function POST(req: Request, context: any) {
+  const params = await context.params;
+  const id = params.id;
   const session = getSession(id);
   if (!session) {
     return NextResponse.json({ ok: false, error: 'Session not found' }, { status: 404 });

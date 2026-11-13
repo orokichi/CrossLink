@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getSession, getMessagesSince } from '@/lib/sessionStore';
 
-export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
-  const { id } = await props.params;
+export const dynamic = 'force-dynamic';
+
+export async function GET(req: Request, context: any) {
+  const params = await context.params;
+  const id = params.id;
   const session = getSession(id);
   if (!session) {
     return NextResponse.json({ ok: false, error: 'Session not found' }, { status: 404 });
