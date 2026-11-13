@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CrossLink</string>
+    <string name="notification_channel_name">CrossLink 接続サービス</string>
+    <string name="notification_channel_desc">PCとのシームレス連携をバックグラウンドで維持します</string>
+    <string name="service_running_title">CrossLink 実行中</string>
+    <string name="service_running_desc">PCとシームレスに接続されています</string>
+</resources>
