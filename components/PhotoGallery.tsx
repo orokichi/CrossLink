@@ -82,7 +82,6 @@ export default function PhotoGallery({
   }, [sessionId]);
 
   useEffect(() => {
-    setLoading(true);
     load();
   }, [load, refreshToken]);
 

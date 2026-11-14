@@ -146,7 +146,7 @@ export default function SettingsSheet({
             </div>
 
             <div className="settings-inline-actions">
-              {permission !== 'granted' && permission !== 'unsupported' && (
+              {permission === 'default' && (
                 <button className="m3-btn m3-btn-tonal settings-small-btn" onClick={requestPermission}>
                   通知を許可する
                 </button>

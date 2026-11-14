@@ -209,10 +209,16 @@ export default function OnboardingWizard({
                 {permission === 'unsupported' && 'このブラウザはWeb通知に対応していません'}
               </div>
 
-              {permission !== 'granted' && permission !== 'unsupported' && (
+              {permission === 'default' && (
                 <button className="m3-btn m3-btn-primary ob-full" onClick={requestNotifications} disabled={busy}>
                   {busy ? '確認中…' : '通知を許可する'}
                 </button>
+              )}
+
+              {permission === 'denied' && (
+                <p className="ob-note">
+                  ブラウザのアドレスバー左側の鍵アイコン（サイト設定）から、通知を「許可」に変更してください。
+                </p>
               )}
             </section>
           )}
