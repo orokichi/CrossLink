@@ -547,6 +547,11 @@ export default function Home() {
           gap: 4px;
           overflow-x: auto;
           max-width: 100%;
+          min-width: 0;
+          scrollbar-width: none;
+        }
+        .nav-tabs::-webkit-scrollbar {
+          display: none;
         }
         .nav-tab-btn {
           padding: 8px 16px;
