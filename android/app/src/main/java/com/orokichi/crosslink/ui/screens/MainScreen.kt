@@ -52,6 +52,7 @@ fun MainScreen(
 
     // Photo library state
     var hasPhotoAccess by remember { mutableStateOf(PhotoPermissions.hasAccess(context)) }
+    var hasFullPhotoAccess by remember { mutableStateOf(PhotoPermissions.hasFullAccess(context)) }
     var photoAccessLabel by remember { mutableStateOf(PhotoPermissions.describe(context)) }
     var photoCount by remember { mutableStateOf(0) }
     var syncing by remember { mutableStateOf(false) }
@@ -62,6 +63,7 @@ fun MainScreen(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
         hasPhotoAccess = PhotoPermissions.hasAccess(context)
+        hasFullPhotoAccess = PhotoPermissions.hasFullAccess(context)
         photoAccessLabel = PhotoPermissions.describe(context)
     }
 
@@ -272,7 +274,7 @@ fun MainScreen(
                     Spacer(modifier = Modifier.height(12.dp))
 
                     Text(
-                        "端末の写真をブラウザの「写真」タブに同期します。転送する写真は長辺1600pxに最適化され、元の写真は端末にそのまま残ります。",
+                        "端末の写真をブラウザの「写真」タブに同期します（1回で最新20枚）。転送する写真は長辺1600pxに最適化され、元の写真は端末にそのまま残ります。",
                         fontSize = 12.sp,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -348,6 +350,17 @@ fun MainScreen(
                                 fontSize = 12.sp,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
+                        }
+
+                        if (!hasFullPhotoAccess) {
+                            Spacer(modifier = Modifier.height(4.dp))
+                            TextButton(
+                                onClick = {
+                                    photoPermissionLauncher.launch(PhotoPermissions.required())
+                                }
+                            ) {
+                                Text("アクセスする写真を変更", fontSize = 12.sp)
+                            }
                         }
                     }
 

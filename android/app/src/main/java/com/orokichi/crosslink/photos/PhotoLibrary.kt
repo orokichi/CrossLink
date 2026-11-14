@@ -66,6 +66,12 @@ object PhotoPermissions {
         return false
     }
 
+    /** Full library access (Android 14 can grant only a user-selected subset instead). */
+    fun hasFullAccess(context: Context): Boolean = when {
+        Build.VERSION.SDK_INT >= 33 -> granted(context, Manifest.permission.READ_MEDIA_IMAGES)
+        else -> granted(context, Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
+
     private fun granted(context: Context, permission: String): Boolean =
         ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 }
