@@ -13,8 +13,9 @@ export async function GET(req: Request, context: any) {
   }
 
   const { meta, data } = stored;
+  const body = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer;
 
-  return new Response(data, {
+  return new Response(body, {
     status: 200,
     headers: {
       'Content-Type': meta.type,

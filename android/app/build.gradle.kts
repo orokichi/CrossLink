@@ -44,6 +44,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-service:2.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.0")
     implementation("androidx.savedstate:savedstate-ktx:1.3.0")
+    implementation("androidx.exifinterface:exifinterface:1.3.7")
     
     // Networking
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
